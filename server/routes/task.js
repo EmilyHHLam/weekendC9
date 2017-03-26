@@ -34,6 +34,28 @@ router.get('/', function(req, res){
     } //end the 1st set of if statement
   }); //end of pool connection
 }); //end of get route function
+//get employee list
+router.get('/employee', function(req, res){
+  // SELECT * FROM "books";
+  pool.connect(function(errorConnectingToDatabase, db, done){
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database.');
+      res.send(500);
+    } else {
+      // We connected!!!!
+      db.query('SELECT * FROM "employee";', function(queryError, result){
+        done();
+        if(queryError) {
+          console.log('Error making query.');
+          res.send(500);
+        } else {
+          // console.log(result); // Good for debugging
+          res.send(result.rows);
+        }//end 2nd set of if statement
+      }); //end the function to select query
+    } //end the 1st set of if statement
+  }); //end of pool connection
+}); //end of get route function
 
 ///post the ticket at 'addtask'
 router.post('/addtask', function(req, res){

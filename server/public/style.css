@@ -4,6 +4,13 @@
 
 }
 
-.addingTask{
+.addingTask {
   background-color: salmon;
+}
+
+.assigningTask {
+  background-color: salmon;
+}
+.between {
+  height: 10px;
 }
