@@ -3,13 +3,36 @@ console.log('jQuery sourced');
 
 var itteam = {};
 var current=0;
-var ticketId ;
+var taskId ;
 var ticketDetail;
 var employeeId;
 
 
 //showing the task list
 getTask();
+
+//showing the work-on-progress
+workOnProgress();
+
+$('.taskinfo').on('click', '.assignnow', function() {
+  console.log('here')
+  console.log($(this).data("employeeid"));
+  console.log($(this).data("id"));
+  console.log($(this).data("detail"));
+  $('.taskinfo').empty();
+  $.ajax( {
+  type: 'POST',
+  url: 'task/assigntask',
+  data: {task_id: $(this).data("id"), employee_id: $(this).data("employeeid") },
+  sucess: function(response){
+    console.log(response);
+      getTask();
+  }
+});//end of ajax
+});//end of clicking taskinfo
+
+//change status to complete
+
 
 $('.addingTask').on('click', '#ticketSubmited', function() {
   console.log('ticketid ' + $('#ticketid').val());
@@ -23,10 +46,7 @@ $('.addingTask').on('click', '#ticketSubmited', function() {
     success: function(response) {
         // Refresh our data
         getTask();
-
       }//end success function
-
-
     });//end of ajax
   }); //end of click addingTask
 });//end document.ready
@@ -40,16 +60,15 @@ function getTask() {
       $('.taskinfo').empty();
       for(var i = 0; i < response.length; i++) {
         var task = response[i];
-        ticketId = task.ticket_id;
+        taskId = task.id;
         ticketDetail = task.detail;
         $('.taskinfo').append('<tr></tr>');
         var $el = $('.taskinfo').children().last();
-        $el.append('<td>' + task.id + '</td>');
-        $el.append('<td>' + ticketId + '</td>');
+        $el.append('<td>' + taskId+ '</td>');
+        $el.append('<td>' + task.ticket_id + '</td>');
         $el.append('<td>' + ticketDetail + '</td>');
         getEmployee();
       }//end for loop
-
     }//end sucess
   });//end ajax
 }//end the gettask()
@@ -60,20 +79,6 @@ $("#target").change( function() {
 // var selectedValue = selectedOption.val();  // gets the selected value
 //  var selectedText = selectedOption.text();  // gets the selected text
 });
-
-$('.taskinfo').on('click', '.assignnow', function() {
-  console.log('here');
-  });
-//   //console.log('delete book' + $(this).data('book'));
-//   // $.ajax({
-//   // type: 'DELETE',
-//   // url: '/books/delete/' + $(this).data('book'),
-//   // success: function(response) {
-//   //   getBooks();
-//   // }
-//   //
-//   });
-
 
 //dropdown list of empployees
 var employee =[];
@@ -105,9 +110,38 @@ console.log('outside=' + employee);
   $el.append('<td><select id ="target">' + option + '</select></td>');
   $el.append('<div id="result1"></div>');
   $el.append('<td><button class="assignnow" data-id="' +
-                      ticketId +'" data-detail= "' + ticketDetail + '" employeeid= "' + employeeID + '">assign task</button>');
+                      taskId +'" data-detail= "' + ticketDetail + '" data-employeeid= "' + employeeID + '">assign task</button>');
 
 
 
 
 }
+//work-on-progress
+function workOnProgress() {
+  $.ajax({
+    type: "GET",
+    url: "/task/wop",
+    success: function(response) {
+      console.log(response);
+      $('.working').empty();
+      for(var i = 0; i < response.length; i++) {
+        var task = response[i];
+        var taskId = task.task_id;
+        var ticketId = task.ticket_id;
+        var detail = task.detail;
+        var employeeName = task.first_name;
+
+        $('.working').append('<tr></tr>');
+        var $el = $('.working').children().last();
+        $el.append('<td>' + taskId+ '</td>');
+        $el.append('<td>' + ticketId + '</td>');
+        $el.append('<td>' + detail + '</td>');
+        $el.append('<td>' + employeeName + '</td>');
+        $el.append('<td><button class="complete" data-id="'+
+                        taskId +'">Complete</button>');
+        $el.append('<td><button class="delete" data-id="'+
+                        taskId +'">Delete</button>');
+      }//end for loop
+    }//end sucess
+  });//end ajax
+}//end the gettask()

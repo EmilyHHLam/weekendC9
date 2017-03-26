@@ -1,16 +1,51 @@
 .body {
-  width: 500;
+  width: 300px;
   font-size: san-serif, arial;
-
+  text-align: left;
 }
 
 .addingTask {
+  width: 520px;
   background-color: salmon;
 }
 
 .assigningTask {
+  width: 520px;
   background-color: salmon;
 }
 .between {
   height: 10px;
 }
+.working {
+  background-color: salmon;
+}
+
+.working input[type=text] {
+    padding:5px;
+    border:2px solid #ccc;
+    font-size: 15px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    }
+    input[type=text]:focus {
+    border-color:green;
+    }
+    input[type=submit] {
+    padding:5px 15px;
+    font-size: 15px;
+    background:#ccc;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+.working tr:nth-child(odd)		{
+      background-color:#eee;
+    }
+.working tr:nth-child(even){
+      background-color:#fff;
+    }
+.working table, th, td {
+      border-collapse: collapse;
+      border: 1px solid green;
+    }

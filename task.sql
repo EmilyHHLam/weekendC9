@@ -12,7 +12,7 @@ CREATE TABLE taskinfo (
 
 CREATE TABLE tasking(
     id SERIAL PRIMARY KEY,
-    ticket_id integer REFERENCES taskinfo,
+    task_id integer REFERENCES taskinfo,
     employee_id  integer REFERENCES itteam,
     complete BOOLEAN NOT NULL,
     delete BOOLEAN NOT NULL

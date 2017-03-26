@@ -21,7 +21,8 @@ router.get('/', function(req, res){
       res.send(500);
     } else {
       // We connected!!!!
-      db.query('SELECT * FROM "taskinfo" ORDER BY "id" DESC;', function(queryError, result){
+      db.query('SELECT "taskinfo"."id" as id, "taskinfo"."ticket_id", "taskinfo"."detail" FROM "taskinfo" LEFT JOIN "tasking" ON "taskinfo"."id" = "tasking"."task_id" WHERE "tasking"."task_id" IS NULL ORDER BY "taskinfo"."id" DESC;', function(queryError, result){
+      //  db.query('SELECT * FROM "taskinfo" ORDER BY "taskinfo"."id" DESC;', function(queryError, result){
         done();
         if(queryError) {
           console.log('Error making query.');
@@ -83,6 +84,56 @@ router.post('/addtask', function(req, res){
   });
 });
 
+//assign a task to employee
+router.post('/assigntask', function(req, res){
+  console.log(req.body);
+  var taskID = req.body.task_id;
+  var employeeID = req.body.employee_id;
+  pool.connect(function(errorConnectingToDatabase, db, done){
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database.');
+      res.send(500);
+    } else {
+      // We connected!!!!
+      db.query('INSERT INTO "tasking" ("task_id", "employee_id")' +
+               ' VALUES ($1,$2);',
+               [taskID, employeeID], function(queryError, result){
+        done();
+        if(queryError) {
+          console.log('Error making query.');
+          res.send(500);
+        } else {
+          res.sendStatus(201);
+        }
+      });
+    }
+  });
+});
 
-
+///work on progress
+// SELECT "tasking"."task_id" as "task_id", "taskinfo"."detail" , "taskinfo"."ticket_id", "employee"."first_name" as first_name FROM "taskinfo"
+// JOIN "tasking" ON "tasking"."task_id" = "taskinfo"."id"
+// JOIN "employee" ON "employee"."id" = "tasking"."task_id"
+//WHERE "tasking"."complete" IS FALSE
+router.get('/wop', function(req, res){
+  // SELECT * FROM "books";
+  pool.connect(function(errorConnectingToDatabase, db, done){
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database.');
+      res.send(500);
+    } else {
+      // We connected!!!!
+      db.query('SELECT "tasking"."task_id" as "task_id", "taskinfo"."ticket_id", "taskinfo"."detail" ,  "employee"."first_name" as first_name FROM "taskinfo" JOIN "tasking" ON "tasking"."task_id" = "taskinfo"."id" JOIN "employee" ON "employee"."id" = "tasking"."employee_id" WHERE "tasking"."complete" IS FALSE;', function(queryError, result){
+        done();
+        if(queryError) {
+          console.log('Error making query.');
+          res.send(500);
+        } else {
+          // console.log(result); // Good for debugging
+          res.send(result.rows);
+        }//end 2nd set of if statement
+      }); //end the function to select query
+    } //end the 1st set of if statement
+  }); //end of pool connection
+}); //end of get route function
 module.exports = router;
