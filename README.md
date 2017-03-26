@@ -1,4 +1,14 @@
 Here are the specific components for the challenge:
+**System Detail**
+As a project manager, Emily Hoang, will assign task among her team:
+
+--client--
+[ ]Emily needs to add the ticket Detail
+[ ]show the list of the tickets and drop down box of showing the employee to assign to
+[ ]list of unassign and list of assign
+[ ] once list of unassign choose who works on , it moves to assign list
+[ ] assign list should have the complete and delete task
+
 
 **Database**
 When the task is created, it should be stored inside of a database (SQL)

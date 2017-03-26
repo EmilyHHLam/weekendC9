@@ -9,10 +9,36 @@
     <script type="text/javascript" src="scripts/client.js">
 
     </script>
+    <link rel="stylesheet" href="style.css">
 
   </head>
   <body>
-    <h1>To Do: </h1>
+    <h1>Tasks: </h1>
+    <div class="addingTask">
+      Adding the Ticket:<br />
+      &nbsp;&nbsp;<input placeholder="Ticket ID" type="text" id="ticketid" /><br />
+      &nbsp;&nbsp;<input placeholder = "Detail" type="text" id="ticket_detail" />
+      <br />
+      <button id="ticketSubmited">Submit a Ticket</button>
+
+    </div>
+    <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Ticket ID</th>
+        <th>Ticket Detail</th>
+        <th>Assign To</th>
+      </tr>
+    </thead>
+    <tbody id="taskinfo">
+
+    </tbody>
+    </table>
+
+    <div class="assignedTask">
+
+    </div>
 
   </body>
 </html>
