@@ -123,7 +123,7 @@ router.get('/wop', function(req, res){
       res.send(500);
     } else {
       // We connected!!!!
-      db.query('SELECT "tasking"."task_id" as "task_id", "taskinfo"."ticket_id", "taskinfo"."detail" ,  "employee"."first_name" as first_name FROM "taskinfo" JOIN "tasking" ON "tasking"."task_id" = "taskinfo"."id" JOIN "employee" ON "employee"."id" = "tasking"."employee_id" WHERE "tasking"."complete" IS FALSE;', function(queryError, result){
+      db.query('SELECT "tasking"."task_id" as "task_id", "taskinfo"."ticket_id", "taskinfo"."detail" ,  "employee"."first_name" as first_name , "tasking"."complete" as complete FROM "taskinfo" JOIN "tasking" ON "tasking"."task_id" = "taskinfo"."id" JOIN "employee" ON "employee"."id" = "tasking"."employee_id" ;', function(queryError, result){
         done();
         if(queryError) {
           console.log('Error making query.');
@@ -136,4 +136,34 @@ router.get('/wop', function(req, res){
     } //end the 1st set of if statement
   }); //end of pool connection
 }); //end of get route function
+
+//set the task to completed
+router.put('/complete/:id', function(req, res){
+  var id = req.params.id;
+
+
+  console.log(req.body);
+  console.log('id=' + id);
+
+
+  pool.connect(function(errorConnectingToDatabase, db, done){
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database.');
+      res.send(500);
+    } else {
+      // We connected!!!!
+      db.query('UPDATE "tasking" SET "complete" = TRUE WHERE "task_id"=$1;',
+      [id], function(queryError, result){
+        done();
+        if(queryError) {
+          console.log('Error making query.');
+          res.send(500);
+        } else {
+          res.sendStatus(202);
+        }
+      });
+    }
+  });
+});
+
 module.exports = router;

@@ -14,6 +14,14 @@ getTask();
 //showing the work-on-progress
 workOnProgress();
 
+$(".taskinfo #target").change( function() {
+  console.log('come here');
+// var selectedOption = $("#targetEmployee option:selected");
+// var selectedValue = selectedOption.val();  // gets the selected value
+//  var selectedText = selectedOption.text();  // gets the selected text
+});
+
+
 $('.taskinfo').on('click', '.assignnow', function() {
   console.log('here')
   console.log($(this).data("employeeid"));
@@ -22,7 +30,7 @@ $('.taskinfo').on('click', '.assignnow', function() {
   $('.taskinfo').empty();
   $.ajax( {
   type: 'POST',
-  url: 'task/assigntask',
+  url: 'task/assigntask/',
   data: {task_id: $(this).data("id"), employee_id: $(this).data("employeeid") },
   sucess: function(response){
     console.log(response);
@@ -32,7 +40,18 @@ $('.taskinfo').on('click', '.assignnow', function() {
 });//end of clicking taskinfo
 
 //change status to complete
-
+$('.working').on('click', '.complete', function() {
+  console.log('set complete');
+  console.log($(this).data('id'));
+   $.ajax( {
+    type: 'PUT',
+   url: '/task/complete/' + $(this).data('id'),
+   success: function(response) {
+  //       // Refresh our data
+        workOnProgress();
+      }//end success function
+    });//end of ajax
+});//end of working div
 
 $('.addingTask').on('click', '#ticketSubmited', function() {
   console.log('ticketid ' + $('#ticketid').val());
@@ -73,12 +92,6 @@ function getTask() {
   });//end ajax
 }//end the gettask()
 //  NOT WORKING - try to grab the assiging employee
-$("#target").change( function() {
-  console.log('come here');
-// var selectedOption = $("#targetEmployee option:selected");
-// var selectedValue = selectedOption.val();  // gets the selected value
-//  var selectedText = selectedOption.text();  // gets the selected text
-});
 
 //dropdown list of empployees
 var employee =[];
@@ -130,6 +143,8 @@ function workOnProgress() {
         var ticketId = task.ticket_id;
         var detail = task.detail;
         var employeeName = task.first_name;
+        var complete =task.complete;
+        console.log(complete);
 
         $('.working').append('<tr></tr>');
         var $el = $('.working').children().last();
@@ -137,8 +152,12 @@ function workOnProgress() {
         $el.append('<td>' + ticketId + '</td>');
         $el.append('<td>' + detail + '</td>');
         $el.append('<td>' + employeeName + '</td>');
+        if (complete) {
+        $el.append('<td>yes</td>')
+        }else {
         $el.append('<td><button class="complete" data-id="'+
                         taskId +'">Complete</button>');
+                      }
         $el.append('<td><button class="delete" data-id="'+
                         taskId +'">Delete</button>');
       }//end for loop
