@@ -11,10 +11,9 @@ getTask();
 workOnProgress();
 
 $('.taskinfo').on('click', '.assignnow', function() {
-  console.log('here')
-  console.log($(this).data("employeeid"));
-  console.log($(this).data("id"));
-  console.log($(this).data("detail"));
+  // console.log($(this).data("employeeid"));
+  // console.log($(this).data("id"));
+  // console.log($(this).data("detail"));
   var taskId = $(this).data("id");
   var selectEL = $('#target' + taskId);
   console.log('selectId' + selectEL.val());
@@ -30,7 +29,6 @@ $('.taskinfo').on('click', '.assignnow', function() {
   }
 });//end of ajax
 });//end of clicking taskinfo
-
 //change status to complete
 $('.working').on('click', '.complete', function() {
   console.log('set complete');
@@ -45,7 +43,7 @@ $('.working').on('click', '.complete', function() {
     });//end of ajax
 });//end of working div
 
-//complete then delete
+//complete then delete, confirm if the task is ready to delete
 $('.working').on('click', '.delete', function() {
   var checkstr =  confirm('are you sure you want to delete task ' + $(this).data('id') + '?');
   if(checkstr == true){
@@ -58,16 +56,14 @@ $('.working').on('click', '.delete', function() {
         workOnProgress();
     }
     });
-
   }else{
   return false;
   }
   })
-
+//adding the new task
 $('.addingTask').on('click', '#ticketSubmited', function() {
   console.log('ticketid ' + $('#ticketid').val());
   console.log('ticketdetail ' + $('#ticket_detail').val());
-
   //add aJax
   $.ajax( {
     type: 'POST',
@@ -110,19 +106,10 @@ function displayTaskList(tasks) {
     $el.append('<td><button class="assignnow" data-id="' +
                 taskId +'" data-detail= "' + ticketDetail + '" data-employeeid= "' + employeeID + '">assign task</button>');
 
-
   }//end for loop
-  $(".taskinfo #target").change( function() {
-    console.log('come here');
-  // var selectedOption = $("#targetEmployee option:selected");
-   var selectedValue = selectedOption.val();  // gets the selected value
-   console.log(selectValue);
-  //  var selectedText = selectedOption.text();  // gets the selected text
-  });
-
 }
-//dropdown list of employees
 
+//dropdown list of employees
 function getEmployees() {
   var numbers;
   $.ajax({
@@ -131,23 +118,16 @@ function getEmployees() {
     success: function(response) {
       console.log(employees);
         employees = response;
-
   }//end loop
   });
-  //NOT WORKING - how to get the array out of the function
-
 
 }
-
 function displayEmployeeList(employees) {
         var option = '';
-
         for (var i=0;i<employees.length;i++){
             employeeID = employees[i].id ;
-
              option += '<option value="'+ employeeID + '">' + employees[i].first_name + '</option>';
         }
-
         return option;
 }
 //work-on-progress
