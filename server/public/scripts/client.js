@@ -34,7 +34,7 @@ $('.working').on('click', '.complete', function() {
   console.log('set complete');
   console.log($(this).data('id'));
    $.ajax( {
-    type: 'PUT',
+   type: 'PUT',
    url: '/task/complete/' + $(this).data('id'),
    success: function(response) {
   //       // Refresh our data
