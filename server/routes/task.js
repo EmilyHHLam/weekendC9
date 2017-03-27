@@ -123,7 +123,7 @@ router.get('/wop', function(req, res){
       res.send(500);
     } else {
       // We connected!!!!
-      db.query('SELECT "tasking"."task_id" as "task_id", "taskinfo"."ticket_id", "taskinfo"."detail" ,  "employee"."first_name" as first_name , "tasking"."complete" as complete FROM "taskinfo" JOIN "tasking" ON "tasking"."task_id" = "taskinfo"."id" JOIN "employee" ON "employee"."id" = "tasking"."employee_id" ;', function(queryError, result){
+      db.query('SELECT "tasking"."task_id" as "task_id", "taskinfo"."ticket_id", "taskinfo"."detail" ,  "employee"."first_name" as first_name , "tasking"."complete" as complete FROM "taskinfo" JOIN "tasking" ON "tasking"."task_id" = "taskinfo"."id" JOIN "employee" ON "employee"."id" = "tasking"."employee_id" ORDER BY "tasking"."complete" DESC ;', function(queryError, result){
         done();
         if(queryError) {
           console.log('Error making query.');
@@ -154,6 +154,31 @@ router.put('/complete/:id', function(req, res){
       // We connected!!!!
       db.query('UPDATE "tasking" SET "complete" = TRUE WHERE "task_id"=$1;',
       [id], function(queryError, result){
+        done();
+        if(queryError) {
+          console.log('Error making query.');
+          res.send(500);
+        } else {
+          res.sendStatus(202);
+        }
+      });
+    }
+  });
+});
+
+//Delete data
+router.delete('/delete/:id', function(req, res){
+  console.log('id =' + req.params.id);
+  var id = req.params.id;
+
+  // INSERT INTO "books" ("author", "title") VALUES ('David Mitchel','Cloud Atlas');
+  pool.connect(function(errorConnectingToDatabase, db, done){
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database.');
+      res.send(500);
+    } else {
+      // We connected!!!!
+      db.query('DELETE FROM "tasking" WHERE "task_id" = ' + id + ';', function(queryError, result){
         done();
         if(queryError) {
           console.log('Error making query.');

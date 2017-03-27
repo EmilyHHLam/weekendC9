@@ -47,10 +47,18 @@ $('.working').on('click', '.complete', function() {
 
 //complete then delete
 $('.working').on('click', '.delete', function() {
-  //console.log('delete here' + $(this).data('id'));
   var checkstr =  confirm('are you sure you want to delete task ' + $(this).data('id') + '?');
   if(checkstr == true){
-    console.log('delete here' + $(this).data('id'));
+    var taskId = $(this).data('id');
+    console.log('delete here' + taskId);
+    $.ajax({
+    type: 'DELETE',
+    url: '/task/delete/' + taskId,
+    success: function(response) {
+        workOnProgress();
+    }
+    });
+
   }else{
   return false;
   }
