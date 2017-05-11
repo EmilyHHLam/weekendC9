@@ -16,9 +16,9 @@
 .between {
   height: 10px;
 }
-.working {
+/*.working {
   background-color: salmon;
-}
+}*/
 .finishedTask {
    align: center;
    background-color: blue;
@@ -26,32 +26,11 @@
 
 }
 
-.working input[type=text] {
-    padding:5px;
-    border:2px solid #ccc;
-    font-size: 15px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    }
-  .working input[type=text]:focus {
-    border-color:green;
-    }
-  .working input[type=submit] {
-    padding:5px 15px;
-    font-size: 15px;
-    background:#ccc;
-    border:0 none;
-    cursor:pointer;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-}
-.working tr:nth-child(odd)		{
-      background-color:#eee;
-    }
-.working tr:nth-child(even){
-      background-color:#fff;
-    }
+/*.working .table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: salmon;
+}*/
+/*
 .working table, th, td {
       border-collapse: collapse;
       border: 1px solid green;
-    }
+    }*/

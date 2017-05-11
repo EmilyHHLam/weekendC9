@@ -146,23 +146,21 @@ function workOnProgress() {
         var employeeName = task.first_name;
         var complete =task.complete;
         console.log(complete);
-        if (complete) {
-          $('.working').append('<tr bgcolor="#FF0000"></tr>');
-        }else {
-          $('.working').append('<tr></tr>');
-        }
+
+        $('.working').append('<div class="col-xs-6 col-md-3"><p ></p></div>');
+
         var $el = $('.working').children().last();
-        $el.append('<td>' + taskId+ '</td>');
-        $el.append('<td>' + ticketId + '</td>');
-        $el.append('<td>' + detail + '</td>');
-        $el.append('<td>' + employeeName + '</td>');
+        $el.append('<p>' + taskId+ '</p>');
+        $el.append('<p>' + ticketId + '</p>');
+        $el.append('<p>' + detail + '</p>');
+        $el.append('<p>' + employeeName + '</p>');
         if (complete) {
-        $el.append('<td align="middle"><img width="15px" height="15px" src="https://balance.ua/img/news/5P8rB9KTzPEbTezNS64JxF50f0PuOCNi_preview/14788457491008.jpg"></td>')
+        $el.append('<p align="middle"><img width="15px" height="15px" src="https://balance.ua/img/news/5P8rB9KTzPEbTezNS64JxF50f0PuOCNi_preview/14788457491008.jpg"></p>')
         }else {
-        $el.append('<td><button class="complete" data-id="'+
+        $el.append('<p><button class="complete" data-id="'+
                         taskId +'">Complete</button>');
         }
-        $el.append('<td><button class="delete" data-id="'+
+        $el.append('<p><button class="delete" data-id="'+
                         taskId +'">Delete</button>');
       }//end for loop
     }//end sucess
