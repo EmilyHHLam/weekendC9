@@ -1,14 +1,15 @@
-Here are the specific components for the challenge:
 **System Detail**
+
 As a project manager, Emily Hoang, will assign task among her team:
 
---client--
-[x]Emily needs to add the ticket Detail
-[x]show the list of the tickets and drop down box of showing the employee to assign to
-[x]list of unassign and list of assign
-[x] once list of unassign choose who works on , it moves to assign list
-[x] assign list should have the complete and delete task
-
+**Client Side**
+* Emily needs to add the ticket Detail
+* Show the list of the tickets and drop down box of showing the employee to assign to
+* List of unassign and list of assign
+* Once list of unassign choose who works on , it moves to assign list
+* Assign list should have the complete and delete task
+* Whether or not a task is complete should also be stored in the database.
+* Deleting a task should remove it both from the Front End as well as the Database
 
 **Database**
 When the task is created, it should be stored inside of a database (SQL)
@@ -16,20 +17,14 @@ When the task is created, it should be stored inside of a database (SQL)
 -employee: list of employees
 -tasking: reference of the employee_id (employee table) and task_id (taskinfo table)
 
-**Client**
 
-[x] Create the user to create a task.
-[x] Whenever a task is created the front end should refresh to show all tasks that need to be completed.
-[x] Each task should have an option to 'Complete' or 'Delete'.
-[x] When a task is complete, its visual representation should change on the front end (for example, the background of the task container could change from gray to green, as well as the complete option 'checked off' (Each of these are accomplished in CSS, but will need to hook into logic to know whether or not the task is complete)
-[x] Whether or not a task is complete should also be stored in the database.
-[x] Deleting a task should remove it both from the Front End as well as the Database.
+## HARD MODE ##
+* In whatever fashion you would like, create an 'are you sure: yes / no' option when deleting a task. Once again, you can interrupt this however you would like.
 
+## PRO MODE ##
+* Adjust the logic so that completed tasks are brought to the bottom of the page, where the remaining tasks left to complete are brought to the top of the list.
 
-HARD MODE
+## Technical Used ##
+AJax, Jquery, SQL, Express, Node.js, CSS3, HTML 5
 
-[x] In whatever fashion you would like, create an 'are you sure: yes / no' option when deleting a task. Once again, you can interrupt this however you would like.
-
-PRO MODE
-
-[x] Adjust the logic so that completed tasks are brought to the bottom of the page, where the remaining tasks left to complete are brought to the top of the list.
+![Screenshot](demo.png)
