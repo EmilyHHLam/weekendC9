@@ -155,7 +155,7 @@ function workOnProgress() {
         $el.append('<p>' + detail + '</p>');
         $el.append('<p>' + employeeName + '</p>');
         if (complete) {
-        $el.append('<p align="middle"><img width="15px" height="15px" src="https://balance.ua/img/news/5P8rB9KTzPEbTezNS64JxF50f0PuOCNi_preview/14788457491008.jpg"></p>')
+        $el.append('<p align="middle"><img style="margin: 0 auto;" width="15px" height="15px" src="https://balance.ua/img/news/5P8rB9KTzPEbTezNS64JxF50f0PuOCNi_preview/14788457491008.jpg"></p>')
         }else {
         $el.append('<p><button class="complete" data-id="'+
                         taskId +'">Complete</button>');
